@@ -10,7 +10,7 @@
 TForm1 *Form1;
 
  int ballMovementX = -8;
- int ballMovementY = -8;
+ int ballMovementY = -4;
 
  int pointsLeftPlayer = 0;
  int pointsRightPlayer = 0;
@@ -102,71 +102,106 @@ void __fastcall TForm1::ballMovementTimer(TObject *Sender)
         //bounce bottom
         if (ball->Top+ball->Height >= background->Height) ballMovementY = -ballMovementY;
 
-        //bounce left paddle
-        if (ball->Top > paddleLeft->Top-ball->Height/2 &&
-            ball->Top < paddleLeft->Top+paddleLeft->Height &&
-            ball->Left <= paddleLeft->Left+paddleLeft->Width)
-            {
-                if (ballMovementX<0)
-                {
-                numberBounce++;
-
-                if (ball->Top > paddleLeft->Top+paddleLeft->Height/4 &&
-                    ball->Top < paddleLeft->Top+(paddleLeft->Height/4)*3)
-                    {
-                        ballMovement->Interval -= 6;
-                        ballMovementX = -ballMovementX;
-                    } else
-                    {
-                        ballMovement->Interval = 20;
-                        ballMovementX = -ballMovementX;
-                    }
-                }
-            }
-
-        //lose left player
-        if (ball->Left <= 0)
+        //lose of left player or bounce left paddle
+        if (ball->Left < paddleLeft->Left)
         {
                 pointsRightPlayer++;
                 winRightPlayer = true;
                 menu();
+        } else if (ball->Top + ball->Height/2 > paddleLeft->Top &&
+                   ball->Top + ball->Height/2 < paddleLeft->Top + paddleLeft->Height &&
+                   ball->Left <= paddleLeft->Left + paddleLeft->Width)
+                   {
+                        if (ballMovementX<0)
+                        {
+                        numberBounce++;
+
+                        if (ball->Top + ball->Height/2 > paddleLeft->Top + paddleLeft->Height/4 &&
+                            ball->Top + ball->Height/2 < paddleLeft->Top +(paddleLeft->Height/4)*3)
+                        {
+                                ballMovement->Interval = 10;
+                                ballMovementX = -ballMovementX;
+
+                                if (ballMovementY == 8)
+                                {
+                                        ballMovementY = 12;
+                                }
+                                if (ballMovementY == -8)
+                                {
+                                        ballMovementY = -12;
+                                }
+                        } else
+                        {
+                                ballMovement->Interval = 20;
+                                ballMovementX = -ballMovementX;
+
+                                if (ballMovementY == 12)
+                                {
+                                        ballMovementY = 8;
+                                }
+                                if (ballMovementY == -12)
+                                {
+                                        ballMovementY = -8;
+                                }
+                        }
+                   }
         }
 
-        //bounce right paddle
-        if (ball->Top > paddleRight->Top-ball->Height/2 &&
-            ball->Top < paddleRight->Top+paddleRight->Height &&
-            ball->Left+ball->Width >= paddleRight->Left)
-            {
-                if (ballMovementX>0)
+
+        //lose right player or bounce right paddle
+        if (ball->Left > paddleRight->Left)
+        {
+                pointsLeftPlayer++;
+                winLeftPlayer = true;
+                menu();
+
+        } else if (ball->Top + ball->Height/2 > paddleRight->Top &&
+                   ball->Top + ball->Height < paddleRight->Top+paddleRight->Height &&
+                   ball->Left + ball->Width >= paddleRight->Left)
+                   {
+                if (ballMovementX > 0)
                 {
                 numberBounce++;
 
                 if (ball->Top > paddleRight->Top+paddleRight->Height/4 &&
                     ball->Top < paddleRight->Top+(paddleRight->Height/4)*3)
                     {
-                        ballMovement->Interval -= 6;
+                        ballMovement->Interval = 10;
                         ballMovementX = -ballMovementX;
+
+                        if (ballMovementY == 8)
+                        {
+                                ballMovementY = 12;
+                        }
+                        if (ballMovementY == -8)
+                        {
+                                ballMovementY = -12;
+                        }
                     } else
                     {
                         ballMovement->Interval = 20;
                         ballMovementX = -ballMovementX;
+
+                        if (ballMovementY == 12)
+                        {
+                                ballMovementY = 8;
+                        }
+                        if (ballMovementY == -12)
+                        {
+                                ballMovementY = -8;
+                        }
                     }
                 }
             }
-
-        //lose right player
-        if (ball->Left >= paddleRight->Left+paddleRight->Width)
-        {
-                pointsLeftPlayer++;
-                winLeftPlayer = true;
-                menu();
-        }
 }
 //---------------------------------------------------------------------------
 void __fastcall TForm1::nextRoundClick(TObject *Sender)
 {
         ball->Top = 300;
         ball->Left = 630;
+        ballMovementX = -8;
+        ballMovementY = -8;
+        ballMovement->Interval = 20;
         points->Visible = false;
         bounces->Visible = false;
         winnerLeft->Visible = false;
