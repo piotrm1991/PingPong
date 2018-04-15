@@ -2,7 +2,6 @@
 
 #include <vcl.h>
 #pragma hdrstop
-#include "mmsystem.h"
 
 #include "Unit1.h"
 //---------------------------------------------------------------------------
@@ -117,12 +116,10 @@ void __fastcall TForm1::ballMovementTimer(TObject *Sender)
                     {
                         ballMovement->Interval -= 6;
                         ballMovementX = -ballMovementX;
-                        sndPlaySound("snd/ping_pong_8bit_beeep.wav", SND_ASYNC);
                     } else
                     {
                         ballMovement->Interval = 20;
                         ballMovementX = -ballMovementX;
-                        sndPlaySound("snd/ping_pong_8bit_peeeeeep.wav", SND_ASYNC);
                     }
                 }
             }
@@ -149,12 +146,10 @@ void __fastcall TForm1::ballMovementTimer(TObject *Sender)
                     {
                         ballMovement->Interval -= 6;
                         ballMovementX = -ballMovementX;
-                        sndPlaySound("snd/ping_pong_8bit_beeep.wav", SND_ASYNC);
                     } else
                     {
                         ballMovement->Interval = 20;
                         ballMovementX = -ballMovementX;
-                        sndPlaySound("snd/ping_pong_8bit_peeeeeep.wav", SND_ASYNC);
                     }
                 }
             }
@@ -184,7 +179,7 @@ void __fastcall TForm1::nextRoundClick(TObject *Sender)
 //---------------------------------------------------------------------------
 void __fastcall TForm1::newGameClick(TObject *Sender)
 {
-        if (Application->MessageBox("Czy napewno chcesz zacz¹ænow¹ grê?" , "PotwierdŸ", MB_YESNO | MB_ICONQUESTION) == IDYES)
+        if (Application->MessageBox("Czy napewno chcesz zacz¹æ now¹ grê?" , "PotwierdŸ", MB_YESNO | MB_ICONQUESTION) == IDYES)
         {
                 numberBounce = 0;
                 pointsLeftPlayer = 0;
