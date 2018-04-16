@@ -192,7 +192,7 @@ void __fastcall TForm1::ballMovementTimer(TObject *Sender)
                         }
                     }
                 }
-            }
+        }
 }
 //---------------------------------------------------------------------------
 void __fastcall TForm1::nextRoundClick(TObject *Sender)
