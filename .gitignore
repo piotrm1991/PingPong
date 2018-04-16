@@ -6,13 +6,5 @@
 *.txt
 *.log
 *.xml
-*.bpr
-*.obj
-*.res
-*.tds
-*.~cpp
-*.~dfm
-*.dfm
-*.~h
 *.wav
 
